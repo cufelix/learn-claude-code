@@ -138,7 +138,8 @@ def main():
         target = Path(linked)
     target.parent.mkdir(parents=True, exist_ok=True)
     body = render(transcript, event.get("session_id", transcript.stem))
-    if body.strip():
+    # only teaching sessions — not e.g. a coding session that happens to run in this folder
+    if re.search(r"SKILL loaded: teach|^> \[!(question|info)\]", body, re.M):
         tmp = target.with_suffix(".tmp")
         tmp.write_text(f"# Lekce {started}\n\n{body}")
         os.replace(tmp, target)  # a live viewer never sees a half-written file

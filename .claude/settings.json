@@ -8,7 +8,9 @@
       "Write(./viz/**)",
       "Edit(./viz/**)",
       "Bash(python3 .claude/learn/md_log.py:*)",
-      "Bash(python3 .claude/learn/klic.py:*)"
+      "Bash(python3 .claude/learn/klic.py:*)",
+      "Write(./zapisky/**)",
+      "Edit(./zapisky/**)"
     ]
   },
   "hooks": {

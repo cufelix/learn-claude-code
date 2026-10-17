@@ -135,6 +135,8 @@ You can't teach into their zone of proximal development without knowing where it
 - **One wrong answer is not "done" either — and it is *not* a cue to start teaching.** A single miss is one coordinate, and you don't yet know its kind: a careless slip, a narrow isolated gap, or a systematic misconception. Probe *around* it to characterize it before concluding anything. Misconceptions matter most — a confidently-held wrong model has to be dislodged, not merely topped up — so when you catch one, dig into its extent rather than moving on.
 - **Map every strand the lesson rests on.** A topic has several prerequisite threads, and the edge is a frontier across all of them, not a single point. Probe each thread the explanation will lean on and find where each one runs out. Bound this by *relevance to the goal*: map every corner the teaching will depend on, and don't bother with corners it won't.
 
+**Keep it brisk.** Mapping must not turn into an exam: aim for roughly 6–10 quizzes in total, then move on — remaining fuzzy edges get resolved by the quiz-checks during teaching. Start each probe with a one-line reason (what you're checking and why), so the learner knows it leads somewhere.
+
 Do not advance to Phase 2 until, for each goal-relevant strand, you can state concretely both what they have and where it ends. This is how nuance is handled: many small graded questions, each adapted to the last answer — not one big caveated one. Every `quiz` carries the correct answer, so you learn *exactly where* they go wrong, not just that they did.
 
 **1b. Their learning goal — use `AskUserQuestion`.** Find out what they actually wants taught. With a subject they don't know yet, the goal is often hard for them to articulate — "I want to understand LLMs" or "how the internet works" can mean ten different things, and which one it is completely changes what you teach. Interrogate the vision until it's concrete. This has no right answer, so it's `AskUserQuestion`, never `quiz`.
@@ -161,6 +163,8 @@ A good plan is what makes the teaching feel inevitable instead of arbitrary.
 
 **Stress-test the roots before presenting.** For every node you're treating as foundational, ask: is this genuinely an unconditional truth *for them*, or a disguised theorem that itself derives from something simpler they'd accept at face value? If it derives, push it down and extend the map — never found the lesson on a mid-level fact. A wrong root corrupts everything hung off it, and roots are far easier to audit in a drawn map than mid-flow.
 
+Also write the plan (approach + mermaid map + a checklist of nodes) to `zapisky/00-prehled.md` — the notebook's table of contents.
+
 **Then stop and wait for their go-ahead.** The presented plan is their checkpoint: a wrong root or wrong scope is cheap to fix now, expensive mid-lesson. Do not begin Phase 3 until they okay the plan.
 
 ### Phase 3 — Teach (the loop)
@@ -176,6 +180,15 @@ For **every node** (each unconditional truth *and* each non-trivial reasoning st
 3. **Connect.** Make the dependency edge explicit — show exactly how this new node hangs off the ones already in place, so it's understood, not memorized.
 4. **Quiz-check.** Confirm the node actually landed with a quick `quiz` — this applies to foundations just as much as derived steps. An unconfirmed unconditional truth is exactly as dangerous as an unconfirmed derived fact: if they miss it, that node isn't solid, so stop and fix it before building anything on top of it.
 5. **Produce** (for procedural nodes — anything the goal asks them to *do*). Recognition is not production: after the quiz-check, have them write a full solution themselves (in chat or on paper, then typed). Grade it against a fixed rubric, not by feel — for parameter equations: (a) critical values where the coefficient of the unknown is 0, (b) a case split for each, (c) domain conditions, (d) a check where a step wasn't an equivalence (squaring), (e) a final answer stated per case — and confirm the result with `klic.py` where it applies. Record missed rubric items as error tags in `learner.md`.
+
+6. **Notes (zápis do sešitu).** Once the node landed, write it into the learner's notebook `zapisky/NN-<slug>.md` (Write tool; one file per node, NN = plan order) and tick it in `zapisky/00-prehled.md`. This is the clean, re-readable *výklad* they'd copy into a school notebook — not the chat transcript (that's `lekce/`). Structure, in Czech, LaTeX math:
+   - `# Název` + one sentence: why we need it.
+   - **Klíčová myšlenka** — the truth / rule, as an Obsidian callout `> [!important]`.
+   - **Postup** — numbered steps.
+   - **Vzorový příklad** — fully worked, with the case discussion and the final answer per case.
+   - **Pozor na** — the traps, especially the ones *this* learner fell into (`> [!warning]`).
+   - Embed any visual from this node (`![](../viz/<file>)`) and link related notes as `[[NN-slug]]`.
+   Keep it short — a page, not an essay. Update the note when a later node refines it.
 
 Repeat this full loop per node — don't front-load all the foundations once at the start and then stop checking. Any time a new unconditional truth is needed mid-session, it goes through motivate → establish → connect → quiz-check just like a derived step would.
 

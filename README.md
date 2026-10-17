@@ -36,6 +36,7 @@ To teach anything else, swap two files.
 | 🧠 **Memory across sessions** | `learner.md` holds your knowledge edge, error patterns and plan progress. A hook injects it automatically when a session starts. |
 | 🖼️ **Verified visuals** | Subagents author Mermaid or SVG diagrams, render them, look at the PNG, and fix them until they are correct. |
 | 📝 **Lesson log** | The whole session is mirrored live to `lekce/*.md`. Open it in Obsidian or a VS Code preview to see rendered LaTeX, diagrams and quiz results. |
+| 📓 **Study notes** | Besides the raw log, every taught concept becomes a clean notebook page in `zapisky/`: the key idea, the method, a worked example and *your* traps. `zapisky/00-prehled.md` holds the plan and a progress checklist. |
 | 🔎 **Fact checking** | A `researcher` subagent verifies any claim the tutor is unsure of before it is taught. |
 
 ## 🚀 Quick start
@@ -48,7 +49,7 @@ pip install sympy                   # answer-key verification
 claude "teach me"                   # accept "trust this folder", otherwise hooks don't run
 ```
 
-Then open the folder in **Obsidian** next to your terminal and watch `lekce/` fill up as you learn.
+Then open the folder in **Obsidian** (*Open folder as vault*) next to your terminal. `lekce/` fills up live as you learn, and `zapisky/` collects your study notes.
 
 > **Requirements:** Claude Code, Python 3.10+, Node 18+, and Google Chrome or Chromium (used for SVG rendering).
 
