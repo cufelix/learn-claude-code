@@ -61,7 +61,7 @@ def validate(q):
     opts = q["options"]
     if not 2 <= len(opts) <= 4:
         fail("AskUserQuestion allows 2–4 options; 'Other' (free text / 'nevím') is added automatically")
-    labels = [o["label"].strip() for o in opts]
+    labels = [squash(o["label"]) for o in opts]
     if len(set(labels)) != len(labels):
         fail("option labels must be unique")
     for a in labels:
@@ -93,7 +93,7 @@ def quiz_id(q):
 def cmd_new(q=None):
     q = q or json.load(sys.stdin)
     values, correct = validate(q)
-    opts = [{"label": o["label"].strip(), "value": v, "description": o.get("description", "")}
+    opts = [{"label": squash(o["label"]), "value": v, "description": o.get("description", "")}
             for o, v in zip(q["options"], values)]
     if q.get("shuffle", True):
         random.shuffle(opts)
@@ -141,12 +141,18 @@ def find_note(resp):
     return ""
 
 
+def squash(s):
+    """The answer UI collapses runs of whitespace, so labels are compared whitespace-normalized."""
+    return " ".join(s.split())
+
+
 def chosen_options(quiz, answer):
     """Exact match only — a free-text answer that merely contains a label is NOT that choice."""
-    by_label = {o["label"]: o for o in quiz["options"]}
+    by_label = {squash(o["label"]): o for o in quiz["options"]}
+    answer = squash(answer)
     if answer in by_label:
         return [by_label[answer]]
-    parts = [p.strip() for p in answer.split(", ")]
+    parts = [squash(p) for p in answer.split(", ")]
     if quiz["spec"].get("multiSelect") and parts and all(p in by_label for p in parts):
         return [by_label[p] for p in parts]
     return []
