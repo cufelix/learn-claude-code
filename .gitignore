@@ -1,0 +1,10 @@
+# původní pi konfigurace (samostatný repo) a osobní data
+.pi/
+.remember/
+zadani.jpg
+/lekce/
+/viz/
+.claude/learn/state/
+.claude/learn/learner.md
+.claude/learn/node_modules/
+.claude/settings.local.json
