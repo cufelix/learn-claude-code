@@ -29,7 +29,7 @@ Vlastní téma: přepiš `cil.md` a `CLAUDE.md`, smaž `.claude/learn/reseni.md`
 | `researcher` (web_search) | `.claude/agents/researcher.md` (WebSearch/WebFetch) |
 | `extensions/quiz.ts` | `.claude/learn/quiz.py` + hooky: správná odpověď se uloží **před** otázkou, náhodné pořadí, okamžité ✓/✗ + vysvětlení, „nevím“, poznámka k odpovědi, kontrola férovosti možností |
 | `extensions/ask-user-question.ts` | vestavěný `AskUserQuestion` |
-| `extensions/md-log.ts` (+ `/md-log`, `/md-unlog`) | `.claude/learn/md_log.py` (hooky Pre/PostToolUse + Stop) + příkazy `/md-log`, `/md-unlog` |
+| `extensions/md-log.ts` (+ `/md-log`, `/md-unlog`) | `.claude/learn/md_log.py` (hooky Pre/PostToolUse + Stop) + příkazy `/md-log [nazev.md]` (jen do `lekce/`), `/md-unlog` |
 | `extensions/visual-tools` | `.claude/learn/render.mjs` (Mermaid přes mmdc, SVG přes headless Chrome) |
 
 ### Navíc oproti originálu

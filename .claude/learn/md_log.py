@@ -100,10 +100,12 @@ def first_date(transcript):
 
 
 def safe_target(arg):
-    """Only a .md file inside the project, never through a symlink — the hook writes there unattended."""
-    path = (PROJECT / arg)
+    """Only a .md file inside lekce/, never through a symlink — the hook writes there unattended,
+    so it must not be able to overwrite CLAUDE.md, skills or anything else."""
+    logs = (PROJECT / "lekce").resolve()
+    path = Path(arg) if Path(arg).is_absolute() else logs / Path(arg).name if "/" not in arg else PROJECT / arg
     resolved = path.resolve()
-    if resolved.suffix != ".md" or not resolved.is_relative_to(PROJECT) or path.is_symlink():
+    if resolved.suffix != ".md" or not resolved.is_relative_to(logs) or path.is_symlink():
         return None
     return str(resolved)
 
@@ -113,7 +115,7 @@ def link(arg):
     STATE.mkdir(exist_ok=True)
     target = safe_target(arg) if arg else None
     if arg and not target:
-        sys.exit(f"Odmítnuto: {arg!r} — log musí být .md soubor uvnitř projektu (ne symlink).")
+        sys.exit(f"Odmítnuto: {arg!r} — log musí být .md soubor ve složce lekce/ (ne symlink).")
     LINK.write_text(json.dumps({"file": target}))
     print(f"md-log → {target}" if target else "md-log off")
 
