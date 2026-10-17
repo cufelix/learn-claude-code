@@ -99,10 +99,21 @@ def first_date(transcript):
     return datetime.now().strftime("%Y-%m-%d")
 
 
+def safe_target(arg):
+    """Only a .md file inside the project, never through a symlink — the hook writes there unattended."""
+    path = (PROJECT / arg)
+    resolved = path.resolve()
+    if resolved.suffix != ".md" or not resolved.is_relative_to(PROJECT) or path.is_symlink():
+        return None
+    return str(resolved)
+
+
 def link(arg):
     """`md_log.py link <file>` / `md_log.py unlink` — port of pi's /md-log and /md-unlog."""
     STATE.mkdir(exist_ok=True)
-    target = str((PROJECT / arg).resolve()) if arg else None
+    target = safe_target(arg) if arg else None
+    if arg and not target:
+        sys.exit(f"Odmítnuto: {arg!r} — log musí být .md soubor uvnitř projektu (ne symlink).")
     LINK.write_text(json.dumps({"file": target}))
     print(f"md-log → {target}" if target else "md-log off")
 
@@ -119,6 +130,8 @@ def main():
     if LINK.exists():
         linked = json.loads(LINK.read_text()).get("file")
         if not linked:
+            return
+        if not safe_target(linked):
             return
         target = Path(linked)
     target.parent.mkdir(parents=True, exist_ok=True)

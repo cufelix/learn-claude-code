@@ -55,7 +55,13 @@ if __name__=='__main__':
     if not a_: selftest()
     else:
         if a_[0] not in EX: sys.exit(f"Neznamy priklad {a_[0]!r}. Dostupne: {', '.join(EX)}")
-        k=a_[0]; kv={s.split('=')[0]:sympify(s.split('=')[1]) for s in a_[1:]}
+        k=a_[0]
+        # jen cisla / zlomky — zadne sympify (eval), skript je v allowlistu bez potvrzeni
+        import re
+        NUM=re.compile(r'^-?\d+(\.\d+)?(/\d+)?$')
+        bad=[s for s in a_[1:] if '=' not in s or not NUM.match(s.split('=',1)[1])]
+        if bad: sys.exit(f"Hodnoty musi byt cisla nebo zlomky (napr. p=-3/2): {bad}")
+        kv={s.split('=',1)[0]:Rational(s.split('=',1)[1]) for s in a_[1:]}
         v,l,rr,ps,key=EX[k]; vals=[kv[str(s)] for s in ps]
         if str(v) in kv:
             s=dict(zip(ps,vals)); s[v]=kv[str(v)]
